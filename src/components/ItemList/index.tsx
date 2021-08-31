@@ -18,7 +18,7 @@ const ItemList = ({ name, unity, price, image, check }: ItemListProps) => {
   return (
     <S.Container check={check}>
       <S.ItemsLeft>
-        <S.ItemImage source={image} />
+        <S.ItemImage source={image} resizeMode="contain" />
         <S.ItemInfo>
           <S.ItemName>{name}</S.ItemName>
           <S.ItemDescription>
