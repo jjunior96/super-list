@@ -5,7 +5,7 @@ import ThumbMacarrao from '../../assets/thumb-macarrao.png';
 import ThumbSabonete from '../../assets/thumb-sabonete.png';
 import ThumbShampoo from '../../assets/thumb-shampoo.png';
 
-export const Items = [
+export const ItemsData = [
   {
     id: '1',
     name: 'Arroz',
