@@ -1,5 +1,5 @@
 import React from 'react';
-// import { CompositeNavigationProp } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
 
 interface MenuBottomProps {
@@ -10,10 +10,25 @@ interface MenuBottomProps {
 import * as S from './styles';
 import Button from '../Button';
 
-const MenuBottom = ({ navigation }: MenuBottomProps) => {
+const MenuBottom = () => {
+  const navigation = useNavigation();
+
+  function handleHome() {
+    navigation.navigate('Home');
+  }
+
+  function handleCart() {
+    navigation.navigate('Cart');
+  }
+
+
+  function handleAddItem() {
+    navigation.navigate('AddItem');
+  }
+
   return (
     <S.Container>
-      <S.ItemContainer onPress={() => navigation.navigate('List')}>
+      <S.ItemContainer onPress={handleHome}>
         <FontAwesome name="list-ul" size={38} color="#20c970" />
 
         <S.ItemInfo>
@@ -26,13 +41,13 @@ const MenuBottom = ({ navigation }: MenuBottomProps) => {
         <FontAwesome name="plus" size={38} color="#fff" />
       </S.AddButton> */}
         <S.AddButton>
-          <Button title="Add" onPress={() => navigation.navigate('')}>
+          <Button title="Add" onPress={handleAddItem}>
             <FontAwesome name="plus" size={38} color="#fff" />
           </Button>
 
         </S.AddButton>
 
-      <S.ItemContainer onPress={() => navigation.navigate('Cart')}>
+      <S.ItemContainer onPress={handleCart}>
         <FontAwesome name="shopping-cart" size={32} color="#20c970" />
 
         <S.ItemInfo>
