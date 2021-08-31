@@ -1,3 +1,4 @@
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled, { css } from 'styled-components/native';
 
@@ -10,6 +11,8 @@ export const Container = styled.View`
     
     align-items: center;
     justify-content: center;
+
+    padding-top: ${getStatusBarHeight() + 16}px;
   `}
 `;
 
@@ -18,6 +21,6 @@ export const Content = styled.Text`
     color: ${theme.colors.sucess};
 
     font-size: ${RFValue(24)}px;
-    font-weight: bold;
+    font-family: ${theme.fonts.primary_700};
   `}
 `;
