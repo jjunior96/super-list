@@ -1,21 +1,31 @@
-import {RectButton} from 'react-native-gesture-handler';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
+
+import { RectButton } from 'react-native-gesture-handler';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 interface ContainerProps {
   check?: boolean;
 }
 
 export const Container = styled(RectButton)<ContainerProps>`
-  width: 100%;
-  background-color: #203449;
-  padding: 16px;
-  border-radius: 8px;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  opacity: ${(props) => (props.check === true ? 0.4 : 1)};
+  ${({ theme, check }) => css`
+    width: 100%;
+    background-color: ${theme.colors.item};
+    
+    padding: ${RFValue(12)}px;
+    
+    border-radius: ${RFValue(8)}px;
+    
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    
+    margin-bottom: ${RFValue(16)}px;
+    
+    box-shadow: 0 ${RFValue(4)}px ${RFValue(6)}px rgba(0, 0, 0, 0.1);
+    
+    opacity: ${check === true ? 0.4 : 1};
+  `}
 `;
 
 export const ItemsLeft = styled.View`
@@ -24,36 +34,49 @@ export const ItemsLeft = styled.View`
 `;
 
 export const ItemImage = styled.Image`
-  height: 48px;
-  width: 48px;
+  height: ${RFValue(44)}px;
+  width: ${RFValue(44)}px;
+  
   background-color: transparent;
-  border-radius: 8px;
+  
+  border-radius: ${RFValue(8)}px;
 `;
 
 export const ItemInfo = styled.View`
-  margin-left: 12px;
+  margin-left: ${RFValue(12)}px;
 `;
 
 export const ItemName = styled.Text`
-  color: #fff;
-  font-size: 18px;
-  font-family: Roboto;
-  margin-bottom: 4px;
-  font-weight: bold;
+   ${({ theme }) => css`
+    color: ${theme.colors.shape};
+    
+    font-size: ${RFValue(16)}px;
+    font-family: 'Roboto';
+    font-weight: bold;
+    
+    margin-bottom: ${RFValue(4)}px;
+  `}
 `;
 
 export const ItemDescription = styled.Text`
-  color: #fff;
-  font-size: 16px;
-  font-family: Roboto;
+  ${({ theme }) => css`
+    color: ${theme.colors.shape};
+    font-size: ${RFValue(12)}px;
+    font-family: 'Roboto';
+  `}
 `;
 
 export const ItemCheck = styled.View`
-  width: 20px;
-  height: 20px;
-  border: 2px solid #20c970;
-  border-radius: 50px;
-  align-items: center;
-  justify-content: center;
-  padding: 0 0 2px;
+  ${({ theme }) => css`
+    width: ${RFValue(20)}px;
+    height: ${RFValue(20)}px;
+  
+    border: ${RFValue(2)}px solid ${theme.colors.sucess};
+    border-radius: ${RFValue(50)}px;
+  
+    align-items: center;
+    justify-content: center;
+  
+  padding: 0 0 ${RFValue(2)}px;
+ `}
 `;
