@@ -51,8 +51,7 @@ export const ItemName = styled.Text`
     color: ${theme.colors.shape};
     
     font-size: ${RFValue(16)}px;
-    font-family: 'Roboto';
-    font-weight: bold;
+    font-family: ${theme.fonts.primary_700};
     
     margin-bottom: ${RFValue(4)}px;
   `}
@@ -62,7 +61,7 @@ export const ItemDescription = styled.Text`
   ${({ theme }) => css`
     color: ${theme.colors.shape};
     font-size: ${RFValue(12)}px;
-    font-family: 'Roboto';
+    font-family: ${theme.fonts.primary_400};
   `}
 `;
 

@@ -8,8 +8,9 @@ interface MenuBottomProps {
 }
 
 import * as S from './styles';
+import Button from '../Button';
 
-const MenuBottom: React.FC<MenuBottomProps> = ({navigation}) => {
+const MenuBottom = ({ navigation }: MenuBottomProps) => {
   return (
     <S.Container>
       <S.ItemContainer onPress={() => navigation.navigate('List')}>
@@ -21,9 +22,15 @@ const MenuBottom: React.FC<MenuBottomProps> = ({navigation}) => {
         </S.ItemInfo>
       </S.ItemContainer>
 
-      <S.AddButton onPress={() => navigation.navigate('AddItem')}>
+      {/* <S.AddButton onPress={() => navigation.navigate('AddItem')}>
         <FontAwesome name="plus" size={38} color="#fff" />
-      </S.AddButton>
+      </S.AddButton> */}
+        <S.AddButton>
+          <Button title="Add" onPress={() => navigation.navigate('')}>
+            <FontAwesome name="plus" size={38} color="#fff" />
+          </Button>
+
+        </S.AddButton>
 
       <S.ItemContainer onPress={() => navigation.navigate('Cart')}>
         <FontAwesome name="shopping-cart" size={32} color="#20c970" />

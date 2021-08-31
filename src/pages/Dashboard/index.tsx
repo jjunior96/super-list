@@ -20,9 +20,11 @@ const Dashboard = () => {
       <Header title="Extra Forte" />
 
       <S.Container>
-        {ItemsData.map((item)=> (
-          <ItemList name={item.name} unity={item.unity} price={item.price} image={item.path} />
-        ))}
+        <S.Content>
+          {ItemsData.map((item)=> (
+            <ItemList name={item.name} unity={item.unity} price={item.price} image={item.path} />
+          ))}
+        </S.Content>
       </S.Container>
       
       <MenuBottom />

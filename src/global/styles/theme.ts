@@ -13,5 +13,9 @@ export default { 
     background: '#162736' ,
     item: '#203449',
     disabled: '#707070'
+  },
+  fonts: {
+    primary_400: 'Roboto_400Regular',
+    primary_700: 'Roboto_700Bold'
   }
 }
