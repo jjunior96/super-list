@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
-import Dashboard from '../pages/Dashboard';
+import Home from '../pages/Home';
 import Cart from '../pages/Cart';
 import AddItem from '../pages/AddItem';
 
@@ -11,8 +11,8 @@ export function StackRoutes() {
   return (
     <Navigator screenOptions={{ headerShown: false }} >
       <Screen 
-        name="Dashboard"
-        component={Dashboard}
+        name="Home"
+        component={Home}
       />
 
       <Screen 
