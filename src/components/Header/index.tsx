@@ -6,12 +6,10 @@ interface HeaderProps {
   title: string;
 }
 
-const Header = ({ title }: HeaderProps) => {
-  return (
-    <S.Container>
-      <S.Content>{title}</S.Content>
-    </S.Container>
-  );
-};
+const Header = ({ title }: HeaderProps) => (
+  <S.Container>
+    <S.Content>{title}</S.Content>
+  </S.Container>
+);
 
 export default Header;

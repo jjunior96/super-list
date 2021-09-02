@@ -1,6 +1,8 @@
 import React from 'react';
 import { RectButtonProperties } from 'react-native-gesture-handler';
 
+import * as S from './styles';
+
 interface ButtonProps extends RectButtonProperties {
   children: React.ReactNode;
   title: string;
@@ -8,14 +10,12 @@ interface ButtonProps extends RectButtonProperties {
   onPress: () => void;
 }
 
-import * as S from './styles';
-
-const Button = ({title, color = '', children, ...rest}: ButtonProps) => {
-  return (
-    <S.Container {...rest}>
-      <S.ButtonText>{title}</S.ButtonText>
-    </S.Container>
-  );
-};
+const Button = ({
+  title, color = '', children, ...rest
+}: ButtonProps) => (
+  <S.Container {...rest}>
+    <S.ButtonText>{title}</S.ButtonText>
+  </S.Container>
+);
 
 export default Button;
