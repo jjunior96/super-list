@@ -19,8 +19,6 @@ const Cart = () => {
       <S.Container>
         
       </S.Container>
-      
-      <MenuBottom />
     </>
   )
 }

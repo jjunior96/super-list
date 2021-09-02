@@ -18,4 +18,4 @@ export default { 
     primary_400: 'Roboto_400Regular',
     primary_700: 'Roboto_700Bold'
   }
-}
+} as const;

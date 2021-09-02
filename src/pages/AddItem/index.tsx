@@ -1,8 +1,9 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, KeyboardAvoidingView, Keyboard } from 'react-native';
+import Button from '../../components/Button';
 
 import Header from '../../components/Header';
-import MenuBottom from '../../components/MenuBottom';
+import Input from '../../components/Input';
 
 import * as S from './styles';
 
@@ -17,11 +18,18 @@ const AddItem = () => {
       <Header title="Novo Item" />
 
       <S.Container>
-        <S.InputText />
-        <S.InputText />
+       <S.Form>
+         <S.FieldsForm>
+          <Input name="nome" placeholder="Nome" />
+          
+          <Input name="price" placeholder="Preço" keyboardType="numeric" />
+          
+          <Input name="quantity" placeholder="Quantidade" keyboardType="numeric" />
+         </S.FieldsForm>
+
+        <Button>Adicionar</Button>
+       </S.Form>
       </S.Container>
-      
-      <MenuBottom />
     </>
   )
 }

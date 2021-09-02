@@ -1,13 +1,12 @@
 import React from 'react';
-import { AntDesign } from '@expo/vector-icons';
+import { ImageSourcePropType } from 'react-native';
 
 import { RectButtonProps } from 'react-native-gesture-handler';
 
+import { AntDesign } from '@expo/vector-icons';
 
-import { ItemsData } from './data';
 
 import * as S from './styles';
-import { ImageSourcePropType } from 'react-native';
 
 interface ItemListProps extends RectButtonProps {
   check?: boolean;
@@ -17,24 +16,30 @@ interface ItemListProps extends RectButtonProps {
   image: ImageSourcePropType;
 }
 
-const ItemList = ({ name, unity, price, image, check, ...rest }: ItemListProps) => {
-  return (
-    <S.Container check={check} {...rest}>
-      <S.ItemsLeft>
-        <S.ItemImage source={image} resizeMode="contain" />
-        <S.ItemInfo>
-          <S.ItemName>{name}</S.ItemName>
-          <S.ItemDescription>
-            2 {unity} - R$ {price}
-          </S.ItemDescription>
-        </S.ItemInfo>
-      </S.ItemsLeft>
+const ItemList = ({
+  name, unity, price, image, check,
+}: ItemListProps) => (
+  <S.Container check={check}>
+    <S.ItemsLeft>
+      <S.ItemImage source={image} resizeMode="contain" />
+      <S.ItemInfo>
+        <S.ItemName>{name}</S.ItemName>
+        <S.ItemDescription>
+          2
+          {' '}
+          {unity}
+          {' '}
+          - R$
+          {' '}
+          {price}
+        </S.ItemDescription>
+      </S.ItemInfo>
+    </S.ItemsLeft>
 
-      <S.ItemCheck>
-        <AntDesign name="checkcircleo" size={18} color="#20c970" />
-      </S.ItemCheck>
-    </S.Container>
-  );
-};
+    <S.ItemCheck>
+      <AntDesign name="checkcircleo" size={18} color="#20c970" />
+    </S.ItemCheck>
+  </S.Container>
+);
 
 export default ItemList;

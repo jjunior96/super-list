@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components/native';
-import {RectButton} from 'react-native-gesture-handler';
+import { RectButton } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 export const Container = styled(RectButton)`

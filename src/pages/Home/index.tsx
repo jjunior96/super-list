@@ -31,8 +31,6 @@ const Home = () => {
         keyExtractor={item => String(item.name)}
         renderItem={({ item }) => <ItemList name={item.name} unity={item.unity} price={item.price} image={item.path} onPress={handleCart} />}
       />
-
-      <MenuBottom />
     </>
   )
 }

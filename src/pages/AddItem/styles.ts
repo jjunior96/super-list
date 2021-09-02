@@ -1,3 +1,4 @@
+import { RFValue } from 'react-native-responsive-fontsize';
 import styled, { css } from 'styled-components/native';
 
 export const Container = styled.View`
@@ -6,9 +7,9 @@ export const Container = styled.View`
     
     align-items: center;
 
-    /* padding: 0 24px; */
-
     background-color: ${theme.colors.background};
+
+    padding: 0 ${RFValue(24)}px;
   `}
 `;
 
@@ -24,4 +25,25 @@ export const Content = styled.ScrollView.attrs({
 
 export const InputText = styled.TextInput`
   width: 100%;
+`;
+
+export const LineInput = styled.View`
+  width: 100%;
+
+  flex-direction: row;
+`;
+
+
+export const Form = styled.View`
+  width: 100%;
+
+  flex: 1;
+
+  padding: 0 0 ${RFValue(24)}px;
+`;
+
+export const FieldsForm = styled.View`
+  width: 100%;
+
+  flex: 1;
 `;
