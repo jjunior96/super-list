@@ -24,13 +24,15 @@ const Home = () => {
         backgroundColor="transparent"
         translucent
       />
-      <Header title="Extra Forte" />
+      <S.Container>
+        <Header title="Extra Forte" />
       
-      <S.Content
-        data={ItemsData}
-        keyExtractor={item => String(item.name)}
-        renderItem={({ item }) => <ItemList name={item.name} unity={item.unity} price={item.price} image={item.path} onPress={handleCart} />}
-      />
+        <S.Content
+          data={ItemsData}
+          keyExtractor={item => String(item.name)}
+          renderItem={({ item }) => <ItemList name={item.name} unity={item.unity} price={item.price} image={item.path} onPress={handleCart} />}
+        />
+      </S.Container>
     </>
   )
 }

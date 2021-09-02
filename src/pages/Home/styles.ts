@@ -11,6 +11,7 @@ export const Container = styled.View`
     /* padding: 0 24px; */
 
     background-color: ${theme.colors.background};
+
   `}
 `;
 
@@ -27,6 +28,9 @@ export const Container = styled.View`
 export const Content = styled.FlatList`
   ${({ theme }) => css`
     width: 100%;
+
+    margin-top: ${RFValue(24)}px;
+
 
     padding: 0 ${RFValue(24)}px;
 

@@ -40,6 +40,8 @@ export const Form = styled.View`
   flex: 1;
 
   padding: 0 0 ${RFValue(24)}px;
+
+  margin-top: ${RFValue(24)}px;
 `;
 
 export const FieldsForm = styled.View`

@@ -5,12 +5,8 @@ import { useTheme } from 'styled-components';
 import * as S from './styles';
 
 interface InputProps extends TextInputProps {
-  name: string;
+  name?: string;
   icon?: string;
-}
-
-interface InpuValueRef {
-  value: string;
 }
 
 const Input = ({name, icon, ...rest}: InputProps) => {
