@@ -2,14 +2,11 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 
 import Header from '../../components/Header';
-import ItemList from '../../components/ItemList';
 import MenuBottom from '../../components/MenuBottom';
-
-import { ItemsData } from '../../components/ItemList/data';
 
 import * as S from './styles';
 
-const Dashboard = () => {
+const AddItem = () => {
   return (
     <>
       <StatusBar 
@@ -17,14 +14,11 @@ const Dashboard = () => {
         backgroundColor="transparent"
         translucent
       />
-      <Header title="Extra Forte" />
+      <Header title="Novo Item" />
 
       <S.Container>
-        <S.Content>
-          {ItemsData.map((item)=> (
-            <ItemList name={item.name} unity={item.unity} price={item.price} image={item.path} />
-          ))}
-        </S.Content>
+        <S.InputText />
+        <S.InputText />
       </S.Container>
       
       <MenuBottom />
@@ -32,4 +26,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard;
+export default AddItem;

@@ -1,11 +1,14 @@
 import React from 'react';
+import { ImageSourcePropType } from 'react-native';
+
+import { RectButtonProps } from 'react-native-gesture-handler';
+
 import { AntDesign } from '@expo/vector-icons';
 
-import { ImageSourcePropType } from 'react-native';
 
 import * as S from './styles';
 
-interface ItemListProps {
+interface ItemListProps extends RectButtonProps {
   check?: boolean;
   name: string;
   unity: string;

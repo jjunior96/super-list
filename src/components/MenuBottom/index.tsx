@@ -1,5 +1,5 @@
 import React from 'react';
-// import { CompositeNavigationProp } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
 
 import * as S from './styles';
