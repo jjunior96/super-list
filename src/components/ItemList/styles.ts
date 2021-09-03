@@ -65,7 +65,7 @@ export const ItemDescription = styled.Text`
   `}
 `;
 
-export const ItemCheck = styled.View`
+export const ItemChecked = styled.View`
   ${({ theme }) => css`
     width: ${RFValue(20)}px;
     height: ${RFValue(20)}px;
@@ -76,6 +76,21 @@ export const ItemCheck = styled.View`
     align-items: center;
     justify-content: center;
   
-  padding: 0 0 ${RFValue(2)}px;
+    padding: 0 0 ${RFValue(2)}px;
+ `}
+`;
+
+export const ItemNoCheck = styled.View`
+  ${({ theme }) => css`
+    width: ${RFValue(20)}px;
+    height: ${RFValue(20)}px;
+  
+    border: ${RFValue(2)}px solid ${theme.colors.sucess};
+    border-radius: ${RFValue(50)}px;
+  
+    align-items: center;
+    justify-content: center;
+  
+    padding: 0 0 ${RFValue(2)}px;
  `}
 `;

@@ -14,7 +14,7 @@ const Cart = () => {
         backgroundColor="transparent"
         translucent
       />
-      <Header title="Extra Forte" />
+      <Header title="Carrinho" />
 
       <S.Container>
         

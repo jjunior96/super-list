@@ -8,23 +8,25 @@ import * as S from './styles';
 
 interface InputControlledProps extends TextInputProps {
   name: string;
-  icon?: string;
   control: Control;
+  error?: string;
+  icon?: string;
 }
 
-const InputControlled = ({ control, name, icon, ...rest }: InputControlledProps) => {
+const InputControlled = ({ name, control, icon, error, ...rest }: InputControlledProps) => {
   const theme = useTheme();
 
   return (
     <S.Container>
+      {error && <S.Error>{error}</S.Error>}
+
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
-          <Input 
-            onChange={onChange}
+          <Input
+            onChangeText={onChange}
             onBlur={onBlur}
             value={value}
-            placeholderTextColor={theme.colors.text}
             {...rest} 
           />
         )}

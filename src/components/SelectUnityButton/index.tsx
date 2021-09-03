@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
-import { unityCategories } from '../../utils/categories';
+import { unityCategories } from '../../utils/unities';
 import Button from '../Button';
 import Header from '../Header';
 
