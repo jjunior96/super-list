@@ -3,42 +3,52 @@ import { ImageSourcePropType } from 'react-native';
 
 import { RectButtonProps } from 'react-native-gesture-handler';
 
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 
 
 import * as S from './styles';
 
-interface ItemListProps extends RectButtonProps {
+export interface ItemListProps extends RectButtonProps {
   check?: boolean;
   name: string;
-  unity: string;
+  quantity: number;
+  unity: {
+    color: string;
+    key: string;
+    name: string;
+  },
   price: string;
-  image: ImageSourcePropType;
+  image?: ImageSourcePropType;
+  isAddToCart: boolean;
+  // onPress?: (id: string) => void;
 }
 
-const ItemList = ({
-  name, unity, price, image, check,
-}: ItemListProps) => (
-  <S.Container check={check}>
+interface Props {
+  data: ItemListProps
+}
+
+const ItemList = ({ data, ...rest }: Props) => (
+  <S.Container check={data.check} {...rest} >
     <S.ItemsLeft>
-      <S.ItemImage source={image} resizeMode="contain" />
+      {/* <S.ItemImage source={data.image} resizeMode="contain" /> */}
       <S.ItemInfo>
-        <S.ItemName>{name}</S.ItemName>
+        <S.ItemName>{data.name}</S.ItemName>
         <S.ItemDescription>
-          2
-          {' '}
-          {unity}
+          {data.quantity}
+          {data.unity}
           {' '}
           - R$
           {' '}
-          {price}
+          {data.price}
         </S.ItemDescription>
       </S.ItemInfo>
     </S.ItemsLeft>
 
-    <S.ItemCheck>
-      <AntDesign name="checkcircleo" size={18} color="#20c970" />
-    </S.ItemCheck>
+    {data.check === true ? (
+      <AntDesign name="checkcircleo" size={20} color="#20c970" />
+    ) : (
+      <MaterialIcons name="radio-button-unchecked" size={24} color="#20c970" />
+    )}
   </S.Container>
 );
 
