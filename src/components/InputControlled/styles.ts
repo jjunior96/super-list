@@ -1,23 +1,19 @@
-import styled, { css } from 'styled-components/native';
-import { TextInput } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import styled, { css } from 'styled-components/native';
 
-
-export const Container = styled(TextInput)`
+export const Container = styled.View`
   ${({ theme }) => css`
     width: 100%;
-    height: 60px;
+  `}
+`;
 
-    padding: 0 ${RFValue(16)}px;
-    margin-bottom: ${RFValue(16)}px;
-    
-    background-color: ${theme.colors.item};
-    
-    border-radius: 12px;
-    
-    color: ${theme.colors.shape};
-    
-    font-size: ${RFValue(16)}px;
+export const Error = styled.Text`
+  ${({ theme }) => css`
+    color: ${theme.colors.attention};
+
+    font-size: ${RFValue(14)}px;
     font-family: ${theme.fonts.primary_400};
+
+    margin-bottom: 6px;
   `}
 `;
