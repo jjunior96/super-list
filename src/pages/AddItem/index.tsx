@@ -1,5 +1,20 @@
 import React, { useState } from 'react';
-import { StatusBar, Modal, KeyboardAvoidingView, Keyboard } from 'react-native';
+import { 
+  Alert,
+  StatusBar, 
+  Modal, 
+  TouchableWithoutFeedback, 
+  KeyboardAvoidingView, 
+  Keyboard 
+} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid';
+
+import { useNavigation } from '@react-navigation/native'
+
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
 import { useForm } from 'react-hook-form';
 
 import AddToCartButton from '../../components/AddToCartButton';
@@ -17,16 +32,32 @@ interface FormDataProps {
   quantity: number;
 }
 
+const schema = Yup.object().shape({
+  name: Yup.string().required('Nome obrigatório'),
+  price: Yup.number()
+    .typeError('Informe um valor numérico')
+    .positive('O valor não pode ser negativo')
+    .required('Preço obrigatório'),
+  quantity: Yup.number()
+    .typeError('Informe um valor numérico')
+    .positive('O valor não pode ser negativo')
+    .required('Quantidade obrigatória'),
+})
+
 const AddItem = () => {
   const [isAddToCart, setIsAddToCart] = useState(false);
   const [isOpenSelectModal, setIsOpenSelectModal] = useState(false);
 
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit, reset, formState: { errors } } = useForm({
+    resolver: yupResolver(schema)
+  });
   
   const [unity, setUnity] = useState({
     key: 'unity',
     name: 'Unidade'
   });
+
+  const navigation = useNavigation();
 
   function handleAddToCart() {
     setIsAddToCart(!isAddToCart);
@@ -40,10 +71,15 @@ const AddItem = () => {
     setIsOpenSelectModal(false);
   }
 
-  function handleSubmitForm(form: FormDataProps) {
+  async function handleSubmitForm(form: FormDataProps) {
+    if(unity.name === 'Unidade') {
+      return Alert.alert('Selecione uma unidade');
+    }
+
     const { name, price, quantity } = form;
 
-    const data = {
+    const newItem = {
+      id: String(uuid.v4()),
       name, 
       price, 
       quantity, 
@@ -51,7 +87,34 @@ const AddItem = () => {
       isAddToCart
     }
 
-    console.log(data);
+    try { 
+      const dataKey = '@superlist:additemlist';
+      
+      const data = await AsyncStorage.getItem(dataKey);
+      
+      const currentData = data ? JSON.parse(data) : [];
+
+      const dataFormatted = [
+        ...currentData,
+        newItem
+      ]      
+
+      await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted));
+
+      setIsAddToCart(false);
+      setUnity({
+        key: 'unity',
+        name: 'Unidade'
+      });
+
+      reset();
+
+      // navigation.goBack();
+      navigation.navigate('Lista');
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Não foi possível adicionar');
+    }
   }
 
 
@@ -64,35 +127,57 @@ const AddItem = () => {
       />
       <Header title="Novo Item" />
 
-      <S.Container>
-       <S.Form>
-         <S.FieldsForm>
-          <InputControlled control={control} name="name" placeholder="Nome" />
-          
-          <InputControlled control={control} name="price" placeholder="Preço" keyboardType="numeric" />
-          
-          <InputControlled control={control} name="quantity" placeholder="Quantidade" keyboardType="numeric" />
+      <TouchableWithoutFeedback
+        onPress={Keyboard.dismiss}
+      >
+        <S.Container>
+          <S.Form>
+            <S.FieldsForm>
+            <InputControlled 
+              control={control} 
+              name="name" 
+              placeholder="Nome"
+              autoCapitalize="sentences"
+              error={errors.name && errors.name.message}
+            />
+            
+            <InputControlled 
+              control={control} 
+              name="price" 
+              placeholder="Preço" 
+              keyboardType="numeric" 
+              error={errors.price && errors.price.message}
+            />
+            
+            <InputControlled 
+              control={control} 
+              name="quantity" 
+              placeholder="Quantidade" 
+              keyboardType="numeric" 
+              error={errors.quantity && errors.quantity.message}
+            />
 
-          <SelectButton title={unity.name} onPress={handleOpenSelectModal} />
+            <SelectButton title={unity.name} onPress={handleOpenSelectModal} />
 
-          <AddToCartButton title="Add ao carrinho" isChecked={isAddToCart} onPress={handleAddToCart} />
-         </S.FieldsForm>
+            <AddToCartButton title="Add ao carrinho" isChecked={isAddToCart} onPress={handleAddToCart} />
+            </S.FieldsForm>
 
-          <Button
-            onPress={handleSubmit(handleSubmitForm)}
-          >
-            Adicionar
-          </Button>
-       </S.Form>
+            <Button
+              onPress={handleSubmit(handleSubmitForm)}
+            >
+              Adicionar
+            </Button>
+          </S.Form>
 
-       <Modal visible={isOpenSelectModal} >
-        <SelectUnityButton 
-          unity={unity}
-          setUnity={setUnity}
-          closeSelectUnity={handleCloseSelectModal}
-        />  
-       </Modal>
-      </S.Container>
+          <Modal visible={isOpenSelectModal} >
+          <SelectUnityButton 
+            unity={unity}
+            setUnity={setUnity}
+            closeSelectUnity={handleCloseSelectModal}
+          />  
+          </Modal>
+        </S.Container>
+      </TouchableWithoutFeedback >
     </>
   )
 }
