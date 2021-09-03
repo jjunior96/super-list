@@ -1,21 +1,78 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Header from '../../components/Header';
-import ItemList from '../../components/ItemList';
-import MenuBottom from '../../components/MenuBottom';
-
-import { ItemsData } from '../../components/ItemList/data';
+import ItemList, { ItemListProps } from '../../components/ItemList';
 
 import * as S from './styles';
 
-const Home = () => {
-  const navigation = useNavigation();
+export interface DataListProps extends ItemListProps {
+  id: string;
+}
 
-  function handleCart() {
-    navigation.navigate('Cart');
+const Home = () => {
+  const [data, setData] = useState<DataListProps[]>([]);
+  const [isChecked, setIsChecked] = useState(false);
+  const [totalPrice, setTotalPrice] = useState('0');
+
+  const loadItemsList = useCallback(async () => {
+    const dataKey = '@superlist:additemlist';
+      
+    const response = await AsyncStorage.getItem(dataKey);
+
+    const items = response ? JSON.parse(response) : [];
+
+
+    const itemsFormatted = items.map((item: DataListProps) => {
+      const price = Number(item.price).toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      });
+
+      return {
+        id: item.id,
+        name: item.name,
+        price,
+        quantity: item.quantity,
+        unity: item.unity.name,
+        image: item.image,
+        check: item.isAddToCart
+      }
+    });
+    
+    setData(itemsFormatted);
+  }, []);
+
+  async function calculateTotalPrice() {
+    const dataKey = '@superlist:additemlist';
+    const response = await AsyncStorage.getItem(dataKey);
+    const items = response ? JSON.parse(response) : [];
+
+    const prices: number = items.reduce(function(total: number, item: DataListProps) {
+      return total + Number(item.price) * Number(item.quantity);
+    }, 0);
+
+    const totalPrice = Number(prices).toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    })
+
+    setTotalPrice(totalPrice);
   }
+
+  useEffect(() => {
+    loadItemsList();
+  }, []);
+  
+  useFocusEffect(useCallback(() => {
+    loadItemsList();
+  }, []));
+
+  useFocusEffect(useCallback(() => {
+    calculateTotalPrice();
+  }, []));
 
   return (
     <>
@@ -25,12 +82,12 @@ const Home = () => {
         translucent
       />
       <S.Container>
-        <Header title="Extra Forte" />
+        <Header title="Lista" totalPrice={totalPrice} />
       
-        <S.Content
-          data={ItemsData}
-          keyExtractor={item => String(item.name)}
-          renderItem={({ item }) => <ItemList name={item.name} unity={item.unity} price={item.price} image={item.path} onPress={handleCart} />}
+        <S.ListContainer
+          data={data}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => <ItemList data={item} />}
         />
       </S.Container>
     </>
