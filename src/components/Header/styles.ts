@@ -20,7 +20,19 @@ export const Content = styled.Text`
   ${({ theme }) => css`
     color: ${theme.colors.sucess};
 
+    margin-bottom: 6px;
+
     font-size: ${RFValue(24)}px;
     font-family: ${theme.fonts.primary_700};
   `}
 `;
+
+export const TotalPrice = styled.Text`
+  ${({ theme }) => css`
+    color: ${theme.colors.sucess};
+
+    font-size: ${RFValue(18)}px;
+    font-family: ${theme.fonts.primary_400};
+  `}
+`;
+
