@@ -109,7 +109,6 @@ const AddItem = () => {
 
       reset();
 
-      // navigation.goBack();
       navigation.navigate('Lista');
     } catch (error) {
       console.error(error);
@@ -119,7 +118,7 @@ const AddItem = () => {
 
 
   return (
-    <>
+    < >
       <StatusBar 
         barStyle="light-content"
         backgroundColor="transparent"
