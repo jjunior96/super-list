@@ -1,5 +1,8 @@
-import { RFValue } from 'react-native-responsive-fontsize';
 import styled, { css } from 'styled-components/native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { FlatList } from 'react-native';
+import { DataListProps } from '../Home';
+import { getBottomSpace } from 'react-native-iphone-x-helper';
 
 export const Container = styled.View`
   ${({ theme }) => css`
@@ -14,14 +17,18 @@ export const Container = styled.View`
     `}
     `;
 
-export const Content = styled.ScrollView.attrs({
+export const ListContainer = styled(FlatList as new() => FlatList<DataListProps>).attrs({
+  showsVerticalScrollIndicator: false,
   contentContainerStyle: {
-    padding: 24,
-    alignItems: 'center',
-  },
-  showsVerticalScrollIndicator: false
+    paddingBottom: getBottomSpace()
+  }
 })`
-  width: 100%;
-  
-  margin-top: ${RFValue(24)}px;
+  ${({ theme }) => css`
+    width: 100%;
+
+    margin-top: ${RFValue(24)}px;
+    padding: 0 ${RFValue(24)}px;
+
+    background-color: ${theme.colors.primary};
+  `}
 `;
