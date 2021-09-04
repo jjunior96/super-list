@@ -24,7 +24,6 @@ const Home = () => {
 
     const items = response ? JSON.parse(response) : [];
 
-
     const itemsFormatted = items.map((item: DataListProps) => {
       const price = Number(item.price).toLocaleString('pt-BR', {
         style: 'currency',
