@@ -22,7 +22,7 @@ export const Container = styled(RectButton)<ContainerProps>`
     
     margin-bottom: ${RFValue(16)}px;
     
-    box-shadow: 0 ${RFValue(4)}px ${RFValue(6)}px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 ${RFValue(4)}px ${RFValue(6)}px rgba(0, 0, 0, 0.4);
     
     opacity: ${check === true ? 0.4 : 1};
   `}

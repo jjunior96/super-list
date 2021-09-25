@@ -25,7 +25,7 @@ interface Props {
   onPress?: () => void;
 }
 
-const ItemList = ({ data, ...rest }: Props) => {
+const ItemList = ({ data, onPress, ...rest }: Props) => {
   const theme = useTheme();
 
   return (
@@ -45,7 +45,7 @@ const ItemList = ({ data, ...rest }: Props) => {
         </S.ItemInfo>
       </S.ItemsLeft>
 
-      <S.CheckContainer onPress={data.onPress} >
+      <S.CheckContainer onPress={onPress} >
         {data.check === true ? (
           <AntDesign name="checkcircleo" size={20} color={theme.colors.sucess} />
           ) : (

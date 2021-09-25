@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { 
   Alert,
   StatusBar, 
   Modal, 
   TouchableWithoutFeedback, 
-  KeyboardAvoidingView, 
   Keyboard 
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
 
 import { useNavigation } from '@react-navigation/native'
@@ -23,6 +23,7 @@ import Header from '../../components/Header';
 import InputControlled from '../../components/InputControlled';
 import SelectButton from '../../components/SelectButton';
 import SelectUnityButton from '../../components/SelectUnityButton';
+import { ItemListProps } from '../../components/ItemList';
 
 import * as S from './styles';
 
@@ -47,17 +48,27 @@ const schema = Yup.object().shape({
 const AddItem = () => {
   const [isAddToCart, setIsAddToCart] = useState(false);
   const [isOpenSelectModal, setIsOpenSelectModal] = useState(false);
-
-  const { control, handleSubmit, reset, formState: { errors } } = useForm({
-    resolver: yupResolver(schema)
-  });
-  
+  const [items, setItems] = useState<ItemListProps[]>([]);
   const [unity, setUnity] = useState({
     key: 'unity',
     name: 'Unidade'
   });
 
   const navigation = useNavigation();
+
+  const { control, handleSubmit, reset, formState: { errors } } = useForm({
+    resolver: yupResolver(schema)
+  });
+
+  async function loadItemsList () {
+    const dataKey = '@superlist:additemlist';
+      
+    const response = await AsyncStorage.getItem(dataKey);
+
+    const items = response ? JSON.parse(response) : [];
+
+   setItems(items);
+  };
 
   function handleAddToCart() {
     setIsAddToCart(!isAddToCart);
@@ -71,12 +82,19 @@ const AddItem = () => {
     setIsOpenSelectModal(false);
   }
 
-  async function handleSubmitForm(form: FormDataProps) {
+  async function handleSubmitForm(data: FormDataProps) {
     if(unity.name === 'Unidade') {
       return Alert.alert('Selecione uma unidade');
     }
+    
+    const { name, price, quantity } = data;
 
-    const { name, price, quantity } = form;
+    // Procura se na lista ja existe o item que o usuario esta adicionando
+    const itemList = items.find(item => item.name === name);
+
+    if(itemList) {
+      return Alert.alert('Item já está na lista');
+    }
 
     const newItem = {
       id: String(uuid.v4()),
@@ -116,9 +134,13 @@ const AddItem = () => {
     }
   }
 
+  useFocusEffect(useCallback(() => {
+    loadItemsList();
+  }, []));
+
 
   return (
-    < >
+    <>
       <StatusBar 
         barStyle="light-content"
         backgroundColor="transparent"
@@ -132,33 +154,33 @@ const AddItem = () => {
         <S.Container>
           <S.Form>
             <S.FieldsForm>
-            <InputControlled 
-              control={control} 
-              name="name" 
-              placeholder="Nome"
-              autoCapitalize="sentences"
-              error={errors.name && errors.name.message}
-            />
-            
-            <InputControlled 
-              control={control} 
-              name="price" 
-              placeholder="Preço" 
-              keyboardType="numeric" 
-              error={errors.price && errors.price.message}
-            />
-            
-            <InputControlled 
-              control={control} 
-              name="quantity" 
-              placeholder="Quantidade" 
-              keyboardType="numeric" 
-              error={errors.quantity && errors.quantity.message}
-            />
+              <InputControlled 
+                control={control} 
+                name="name" 
+                placeholder="Nome"
+                autoCapitalize="sentences"
+                error={errors.name && errors.name.message}
+              />
+              
+              <InputControlled 
+                control={control} 
+                name="price" 
+                placeholder="Preço" 
+                keyboardType="numeric" 
+                error={errors.price && errors.price.message}
+              />
+              
+              <InputControlled 
+                control={control} 
+                name="quantity" 
+                placeholder="Quantidade" 
+                keyboardType="numeric" 
+                error={errors.quantity && errors.quantity.message}
+              />
 
-            <SelectButton title={unity.name} onPress={handleOpenSelectModal} />
+              <SelectButton title={unity.name} onPress={handleOpenSelectModal} />
 
-            <AddToCartButton title="Add ao carrinho" isChecked={isAddToCart} onPress={handleAddToCart} />
+              <AddToCartButton title="Add ao carrinho" isChecked={isAddToCart} onPress={handleAddToCart} />
             </S.FieldsForm>
 
             <Button
