@@ -20,25 +20,6 @@ const Cart = () => {
     const response = await AsyncStorage.getItem(dataKey);
 
     const items = response ? JSON.parse(response) : [];
-
-    const itemsFormatted = items.map((item: DataListProps) => {
-      const price = Number(item.price).toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-      });
-
-      return {
-        id: item.id,
-        name: item.name,
-        price,
-        quantity: item.quantity,
-        unity: item.unity.name,
-        image: item.image,
-        check: item.isAddToCart
-      }
-  });
-    
-    setData(itemsFormatted);
   }, []);
 
   const handleCheckItem = useCallback((index) => {
@@ -51,10 +32,9 @@ const Cart = () => {
         console.log(item);
         return item;
       }
-
     });
 
-    console.log(newItems);
+    console.log(itemsList);
     
     // setData(newItems[1]);
   }, []);
